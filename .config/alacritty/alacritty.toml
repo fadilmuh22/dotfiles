@@ -1,0 +1,35 @@
+[general]
+import = [
+   "~/.config/alacritty/themes/themes/oxocarbon.toml"
+]
+
+[terminal.shell]
+program = "/bin/bash"
+args = ["-c", "/home/fadillads/.scripts/tmux_chooser.sh"]
+
+[window]
+# decorations = "None"
+opacity = 1
+dimensions = { columns = 90, lines = 30}
+
+[window.padding]
+x = 10
+y = 10
+
+[font]
+size = 16.0
+
+[font.normal]
+family = "MesloLGM NerdFont Mono"
+style = "Regular"
+
+[cursor.style]
+shape = "Beam"
+blinking = "Always"
+
+[cursor.vi_mode_style]
+shape = "Block"
+blinking = "Always"
+
+[selection]
+save_to_clipboard = true
