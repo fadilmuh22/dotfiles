@@ -83,7 +83,7 @@ return {
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
       pcall(require('telescope').load_extension, 'live_grep_args')
-
+      pcall(require('telescope').load_extension, 'remote-sshfs')
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
       local extensions = require('telescope').extensions
@@ -119,8 +119,8 @@ return {
 
       -- Shortcut for searching your Neovim configuration files
       vim.keymap.set('n', '<leader>sn', function()
-        builtin.find_files { cwd = vim.fn.stdpath 'config' }
-      end, { desc = '[S]earch [N]eovim files' })
+        builtin.find_files { cwd = '~/.config/nvim', follow = true }
+      end, { desc = '[S]earch [N]eovim filessss' })
     end,
   },
 }
