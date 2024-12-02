@@ -54,6 +54,20 @@ return {
       -- Telescope picker. This is really useful to discover what Telescope can
       -- do as well as how to actually do it!
 
+      local action_layout = require 'telescope.actions.layout'
+      local layout_strategies = require 'telescope.pickers.layout_strategies'
+      layout_strategies.horizontal_fused = function(picker, max_columns, max_lines, layout_config)
+        local layout = layout_strategies.horizontal(picker, max_columns, max_lines, layout_config)
+        layout.prompt.title = ''
+        layout.results.title = ''
+        layout.preview.title = ''
+        layout.results.height = layout.results.height + 1
+        layout.results.borderchars = { '─', '│', '─', '│', '╭', '┬', '┤', '├' }
+        layout.preview.borderchars = { '─', '│', '─', ' ', '─', '╮', '╯', '─' }
+        layout.prompt.borderchars = { '─', '│', '─', '│', '╭', '╮', '┴', '╰' }
+        return layout
+      end
+
       -- [[ Configure Telescope ]]
       -- See `:help telescope` and `:help telescope.setup()`
       require('telescope').setup {
@@ -61,17 +75,31 @@ return {
         --  All the info you're looking for is in `:help telescope.setup()`
         --
         defaults = {
+          path_display = { 'filename_first' },
+          layout_strategy = 'horizontal_fused',
+          layout_config = {
+            horizontal = {
+              width = 0.9,
+            },
+          },
           mappings = {
             n = {
               ['<c-d>'] = require('telescope.actions').delete_buffer,
+              ['<M-p>'] = action_layout.toggle_preview,
             },
             i = {
               ['<c-space>'] = 'to_fuzzy_refine',
               ['<c-d>'] = require('telescope.actions').delete_buffer,
+              ['<M-p>'] = action_layout.toggle_preview,
             },
           },
         },
-        -- pickers = {}
+        pickers = {
+          find_files = {
+            follow = true,
+            hidden = true,
+          },
+        },
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
@@ -120,7 +148,7 @@ return {
       -- Shortcut for searching your Neovim configuration files
       vim.keymap.set('n', '<leader>sn', function()
         builtin.find_files { cwd = '~/.config/nvim', follow = true }
-      end, { desc = '[S]earch [N]eovim filessss' })
+      end, { desc = '[S]earch [N]eovim files' })
     end,
   },
 }

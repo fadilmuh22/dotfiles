@@ -26,3 +26,5 @@ alias goswagger="docker run --rm -it  --user $(id -u):$(id -g) -e GOCACHE=$HOME/
 export PATH=$PATH:$HOME/.local/bin
 export PATH=$PATH:$HOME/go/bin
 export PATH=$PATH:$HOME/fvm/default/bin
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
