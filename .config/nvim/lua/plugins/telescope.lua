@@ -6,6 +6,10 @@
 -- Use the `dependencies` key to specify the dependencies of a particular plugin
 
 return {
+  {
+    'nvim-telescope/telescope-file-browser.nvim',
+    dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' },
+  },
   { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
     event = 'VimEnter',
@@ -54,20 +58,6 @@ return {
       -- Telescope picker. This is really useful to discover what Telescope can
       -- do as well as how to actually do it!
 
-      local action_layout = require 'telescope.actions.layout'
-      local layout_strategies = require 'telescope.pickers.layout_strategies'
-      layout_strategies.horizontal_fused = function(picker, max_columns, max_lines, layout_config)
-        local layout = layout_strategies.horizontal(picker, max_columns, max_lines, layout_config)
-        layout.prompt.title = ''
-        layout.results.title = ''
-        layout.preview.title = ''
-        layout.results.height = layout.results.height + 1
-        layout.results.borderchars = { '─', '│', '─', '│', '╭', '┬', '┤', '├' }
-        layout.preview.borderchars = { '─', '│', '─', ' ', '─', '╮', '╯', '─' }
-        layout.prompt.borderchars = { '─', '│', '─', '│', '╭', '╮', '┴', '╰' }
-        return layout
-      end
-
       -- [[ Configure Telescope ]]
       -- See `:help telescope` and `:help telescope.setup()`
       require('telescope').setup {
@@ -76,21 +66,23 @@ return {
         --
         defaults = {
           path_display = { 'filename_first' },
-          layout_strategy = 'horizontal_fused',
+          sorting_strategy = 'ascending',
           layout_config = {
+            prompt_position = 'top',
             horizontal = {
               width = 0.9,
+              preview_width = 0.5,
             },
           },
           mappings = {
             n = {
               ['<c-d>'] = require('telescope.actions').delete_buffer,
-              ['<M-p>'] = action_layout.toggle_preview,
+              ['<M-p>'] = require('telescope.actions.layout').toggle_preview,
             },
             i = {
               ['<c-space>'] = 'to_fuzzy_refine',
               ['<c-d>'] = require('telescope.actions').delete_buffer,
-              ['<M-p>'] = action_layout.toggle_preview,
+              ['<M-p>'] = require('telescope.actions.layout').toggle_preview,
             },
           },
         },
@@ -126,6 +118,17 @@ return {
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+
+      vim.keymap.set('n', '<space>fb', function()
+        extensions.file_browser.file_browser { grouped = true }
+      end, { desc = '[S]earch File [B]rowser' })
+
+      -- open file_browser with the path of the current buffer
+      vim.keymap.set('n', '<space>fB', function()
+        extensions.file_browser.file_browser { grouped = true, path = '%:p:h', select_buffer = true }
+      end, { desc = '[S]earch File browser current [B]uffer' })
+
+      -- ':Telescope file_browser path=%:p:h select_buffer=true<CR>')
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()

@@ -3,6 +3,9 @@ import = [
    "~/.config/alacritty/themes/themes/oxocarbon.toml"
 ]
 
+[env]
+term = "xterm-256color"
+
 [terminal.shell]
 program = "/bin/bash"
 args = ["-c", "/home/fadillads/.scripts/tmux_chooser.sh"]
