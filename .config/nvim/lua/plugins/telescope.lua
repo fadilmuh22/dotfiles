@@ -37,6 +37,8 @@ return {
         'nvim-telescope/telescope-live-grep-args.nvim',
         version = '^1.0.0',
       },
+      'nvim-telescope/telescope-smart-history.nvim',
+      'kkharji/sqlite.lua',
     },
     config = function()
       -- Telescope is a fuzzy finder that comes with a lot of different things that
@@ -57,6 +59,7 @@ return {
       -- This opens a window that shows you all of the keymaps for the current
       -- Telescope picker. This is really useful to discover what Telescope can
       -- do as well as how to actually do it!
+      local data = assert(vim.fn.stdpath 'data') --[[@as string]]
 
       -- [[ Configure Telescope ]]
       -- See `:help telescope` and `:help telescope.setup()`
@@ -73,6 +76,10 @@ return {
               width = 0.9,
               preview_width = 0.5,
             },
+          },
+          history = {
+            path = vim.fs.joinpath(data, 'telescope_history.sqlite3'),
+            limit = 100,
           },
           mappings = {
             n = {
@@ -92,9 +99,25 @@ return {
             hidden = true,
           },
         },
+
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
+          },
+          live_grep_args = {
+            auto_quoting = true,
+            -- Default arguments for live_grep_args
+            vimgrep_arguments = {
+              'rg',
+              '--color=never',
+              '--no-heading',
+              '--with-filename',
+              '--line-number',
+              '--column',
+              '--smart-case',
+              '-u',
+              '-L',
+            },
           },
         },
       }

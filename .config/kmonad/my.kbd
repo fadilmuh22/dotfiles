@@ -42,7 +42,7 @@
 
   ;; ahr #(blup (layer-add homerow))
   ;; rhr #(bldn (layer-rem homerow))
-  hr (layer-toggle homerow)
+  hr (tap-hold-next-release 200 (around lctl b) (layer-toggle homerow))
 
   ;; Homerow modifiers
   meta (tap-hold-next-release 200 a lmet)
