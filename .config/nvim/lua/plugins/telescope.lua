@@ -6,10 +6,10 @@
 -- Use the `dependencies` key to specify the dependencies of a particular plugin
 
 return {
-  {
-    'nvim-telescope/telescope-file-browser.nvim',
-    dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' },
-  },
+  -- {
+  --   'nvim-telescope/telescope-file-browser.nvim',
+  --   dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' },
+  -- },
   { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
     event = 'VimEnter',
@@ -68,7 +68,7 @@ return {
         --  All the info you're looking for is in `:help telescope.setup()`
         --
         defaults = {
-          path_display = { 'filename_first' },
+          path_display = { 'shorten' },
           sorting_strategy = 'ascending',
           layout_config = {
             prompt_position = 'top',
@@ -104,21 +104,21 @@ return {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
           },
-          live_grep_args = {
-            auto_quoting = true,
-            -- Default arguments for live_grep_args
-            vimgrep_arguments = {
-              'rg',
-              '--color=never',
-              '--no-heading',
-              '--with-filename',
-              '--line-number',
-              '--column',
-              '--smart-case',
-              '-u',
-              '-L',
-            },
-          },
+          -- live_grep_args = {
+          --   auto_quoting = true,
+          --   -- Default arguments for live_grep_args
+          --   vimgrep_arguments = {
+          --     'rg',
+          --     '--color=never',
+          --     '--no-heading',
+          --     '--with-filename',
+          --     '--line-number',
+          --     '--column',
+          --     '--smart-case',
+          --     '-u',
+          --     '-L',
+          --   },
+          -- },
         },
       }
 
@@ -127,6 +127,7 @@ return {
       pcall(require('telescope').load_extension, 'ui-select')
       pcall(require('telescope').load_extension, 'live_grep_args')
       pcall(require('telescope').load_extension, 'remote-sshfs')
+
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
       local extensions = require('telescope').extensions
@@ -142,14 +143,14 @@ return {
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
-      vim.keymap.set('n', '<space>fb', function()
-        extensions.file_browser.file_browser { grouped = true }
-      end, { desc = '[S]earch File [B]rowser' })
-
-      -- open file_browser with the path of the current buffer
-      vim.keymap.set('n', '<space>fB', function()
-        extensions.file_browser.file_browser { grouped = true, path = '%:p:h', select_buffer = true }
-      end, { desc = '[S]earch File browser current [B]uffer' })
+      -- vim.keymap.set('n', '<space>fb', function()
+      --   extensions.file_browser.file_browser { grouped = true }
+      -- end, { desc = '[S]earch File [B]rowser' })
+      --
+      -- -- open file_browser with the path of the current buffer
+      -- vim.keymap.set('n', '<space>fB', function()
+      --   extensions.file_browser.file_browser { grouped = true, path = '%:p:h', select_buffer = true }
+      -- end, { desc = '[S]earch File browser current [B]uffer' })
 
       -- ':Telescope file_browser path=%:p:h select_buffer=true<CR>')
 

@@ -24,10 +24,13 @@ export GOROOT=$HOME/.local/go1.22.5
 GOSWAGGER_REPO="quay.io"    #<- or "ghcr.io"
 alias goswagger="docker run --rm -it  --user $(id -u):$(id -g) -e GOCACHE=$HOME/.cache/go-build -v $HOME:$HOME -w $(pwd) $GOSWAGGER_REPO/goswagger/swagger"
 
+alias lamp="docker compose -f ~/personal/lamp/docker-compose.yaml"
+
 export PATH=$PATH:$HOME/.local/bin
 export PATH=$PATH:$HOME/go/bin
 export PATH=$PATH:$HOME/fvm/default/bin
-export PATH=$PATH:$ANDROID_HOME/emulator
-export PATH=$PATH:$ANDROID_HOME/platform-tools
-export PATH=$PATH:$ANDROID_HOME/tools/bin/sdkmanager
-export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
+
+# export PATH=$PATH:$ANDROID_HOME/emulator
+# export PATH=$PATH:$ANDROID_HOME/platform-tools
+# export PATH=$PATH:$ANDROID_HOME/tools/bin/sdkmanager
+# export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin

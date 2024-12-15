@@ -21,7 +21,7 @@ zinit light Aloxaf/fzf-tab
 # Add in snippets
 zinit snippet OMZL::git.zsh
 zinit snippet OMZP::git
-# zinit snippet OMZP::sudo
+zinit snippet OMZP::sudo
 zinit snippet OMZP::archlinux
 zinit snippet OMZP::aws
 zinit snippet OMZP::kubectl
@@ -48,7 +48,7 @@ bindkey '^[[A' history-beginning-search-backward
 bindkey '^[[B' history-beginning-search-forward
 
 bindkey '^[w' kill-region
-bindkey '^ ' autosuggest-accept
+bindkey '^y' autosuggest-accept
 
 # History
 HISTSIZE=5000
@@ -97,6 +97,15 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 ## Completion scripts setup. Remove the following line to uninstall
 [[ -f /home/fadillads/.config/.dart-cli-completion/zsh-config.zsh ]] && . /home/fadillads/.config/.dart-cli-completion/zsh-config.zsh || true
 ## [/Completion]
+
+ssh() {
+  helper="$HOME/bin/_ssh_tmux_background"
+  command ssh \
+    -o PermitLocalCommand=yes \
+    -o LocalCommand="'$helper' '%h'" \
+    "$@"
+  "$helper"
+}
 
 _fix_cursor() {
    echo -ne '\e[5 q'
