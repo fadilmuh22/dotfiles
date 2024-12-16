@@ -72,7 +72,7 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # Shell integrations
 eval "$(zoxide init --cmd cd zsh)"
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source <(fzf --zsh)
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
@@ -108,7 +108,7 @@ ssh() {
 }
 
 _fix_cursor() {
-   echo -ne '\e[5 q'
+  echo -ne '\e[5 q'
 }
 
 precmd_functions+=(_fix_cursor)

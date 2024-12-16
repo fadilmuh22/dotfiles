@@ -1,6 +1,6 @@
 [general]
 import = [
-   "~/.config/alacritty/themes/themes/oxocarbon.toml"
+   "~/.config/alacritty/themes/themes/kanagawa_wave.toml"
 ]
 
 [env]
@@ -8,7 +8,7 @@ term = "xterm-256color"
 
 [terminal.shell]
 program = "/bin/bash"
-args = ["-c", "/home/fadillads/.scripts/tmux_chooser.sh"]
+args = ["-c", "~/.scripts/tmux_chooser.sh"]
 
 [window]
 # decorations = "None"
@@ -23,7 +23,7 @@ y = 10
 size = 14.0
 
 [font.normal]
-family = "MesloLGM NerdFont Mono"
+family = "JetBrainsMono NF"
 style = "Regular"
 
 [cursor.style]
