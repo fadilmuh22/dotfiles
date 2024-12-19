@@ -1,5 +1,10 @@
 -- LSP Plugins
 return {
+  -- {
+  --   'pmizio/typescript-tools.nvim',
+  --   dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
+  --   opts = {},
+  -- },
   {
     'nvim-flutter/flutter-tools.nvim',
     lazy = false,
@@ -35,12 +40,12 @@ return {
 
       -- Useful status updates for LSP.
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', opts = {} },
+      { 'j-hui/fidget.nvim',       opts = {} },
 
       -- Allows extra capabilities provided by nvim-cmp
       'hrsh7th/cmp-nvim-lsp',
     },
-    config = function()
+   config = function()
       -- Brief aside: **What is LSP?**
       --
       -- LSP is an initialism you've probably heard, but might not understand what it is.
@@ -233,6 +238,7 @@ return {
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
         'markdownlint',
+        'typescript-language-server',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 

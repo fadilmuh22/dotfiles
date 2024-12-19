@@ -1,4 +1,3 @@
-alias vim=nvim
 alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'
 alias ls='exa'
 alias cat='bat'
@@ -27,6 +26,7 @@ alias goswagger="docker run --rm -it  --user $(id -u):$(id -g) -e GOCACHE=$HOME/
 alias lamp="docker compose -f ~/personal/lamp/docker-compose.yaml"
 
 export PATH=$PATH:$HOME/.local/bin
+export PATH=$PATH:$HOME/.npm/bin
 export PATH=$PATH:$HOME/go/bin
 export PATH=$PATH:$HOME/fvm/default/bin
 

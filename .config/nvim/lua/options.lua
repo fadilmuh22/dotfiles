@@ -31,6 +31,9 @@ vim.schedule(function()
   vim.opt.clipboard = 'unnamedplus'
 end)
 
+-- Line ending based on file
+-- vim.opt.fileformats = 'unix,dos,mac'
+
 -- Enable break indent
 vim.opt.breakindent = true
 
