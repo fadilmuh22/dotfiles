@@ -19,8 +19,8 @@ export ANDROID_AVD_HOME=$HOME/.android/avd
 
 . "$HOME/.cargo/env"
 
-export GOROOT=$HOME/.local/go1.22.5
-GOSWAGGER_REPO="quay.io"    #<- or "ghcr.io"
+GOPATH=$HOME/go
+GOSWAGGER_REPO="ghcr.io"
 alias goswagger="docker run --rm -it  --user $(id -u):$(id -g) -e GOCACHE=$HOME/.cache/go-build -v $HOME:$HOME -w $(pwd) $GOSWAGGER_REPO/goswagger/swagger"
 
 alias lamp="docker compose -f ~/personal/lamp/docker-compose.yaml"

@@ -115,3 +115,4 @@ _fix_cursor() {
 precmd_functions+=(_fix_cursor)
 
 PS1='\[\033[01;32m\]\u@\h \[\033[01;34m\]\w\$ '
+
