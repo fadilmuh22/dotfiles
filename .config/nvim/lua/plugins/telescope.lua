@@ -15,60 +15,32 @@ return {
     event = 'VimEnter',
     branch = '0.1.x',
     dependencies = {
+      'kkharji/sqlite.lua',
       'nvim-lua/plenary.nvim',
-      { -- If encountering errors, see telescope-fzf-native README for installation instructions
+      'dharmx/telescope-media.nvim',
+      'nvim-telescope/telescope-ui-select.nvim',
+      'nvim-telescope/telescope-smart-history.nvim',
+      'nvim-telescope/telescope-live-grep-args.nvim',
+
+      {
+        'nvim-tree/nvim-web-devicons',
+        enabled = vim.g.have_nerd_font,
+      },
+      {
         'nvim-telescope/telescope-fzf-native.nvim',
-
-        -- `build` is used to run some command when the plugin is installed/updated.
-        -- This is only run then, not every time Neovim starts up.
         build = 'make',
-
-        -- `cond` is a condition used to determine whether this plugin should be
-        -- installed and loaded.
         cond = function()
           return vim.fn.executable 'make' == 1
         end,
       },
-      { 'nvim-telescope/telescope-ui-select.nvim' },
-
-      -- Useful for getting pretty icons, but requires a Nerd Font.
-      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
-      {
-        'nvim-telescope/telescope-live-grep-args.nvim',
-        version = '^1.0.0',
-      },
-      'nvim-telescope/telescope-smart-history.nvim',
-      'kkharji/sqlite.lua',
     },
     config = function()
-      -- Telescope is a fuzzy finder that comes with a lot of different things that
-      -- it can fuzzy find! It's more than just a "file finder", it can search
-      -- many different aspects of Neovim, your workspace, LSP, and more!
-      --
-      -- The easiest way to use Telescope, is to start by doing something like:
-      --  :Telescope help_tags
-      --
-      -- After running this command, a window will open up and you're able to
-      -- type in the prompt window. You'll see a list of `help_tags` options and
-      -- a corresponding preview of the help.
-      --
-      -- Two important keymaps to use while in Telescope are:
-      --  - Insert mode: <c-/>
-      --  - Normal mode: ?
-      --
-      -- This opens a window that shows you all of the keymaps for the current
-      -- Telescope picker. This is really useful to discover what Telescope can
-      -- do as well as how to actually do it!
+      local canned = require 'telescope._extensions.media.lib.canned'
       local data = assert(vim.fn.stdpath 'data') --[[@as string]]
 
-      -- [[ Configure Telescope ]]
-      -- See `:help telescope` and `:help telescope.setup()`
       require('telescope').setup {
-        -- You can put your default mappings / updates / etc. in here
-        --  All the info you're looking for is in `:help telescope.setup()`
-        --
         defaults = {
-          path_display = { 'shorten' },
+          path_display = { 'smart' },
           sorting_strategy = 'ascending',
           layout_config = {
             prompt_position = 'top',
@@ -85,11 +57,13 @@ return {
             n = {
               ['<c-d>'] = require('telescope.actions').delete_buffer,
               ['<M-p>'] = require('telescope.actions.layout').toggle_preview,
+              ['<c-q>'] = require('telescope.actions').smart_send_to_loclist.action,
             },
             i = {
               ['<c-space>'] = 'to_fuzzy_refine',
               ['<c-d>'] = require('telescope.actions').delete_buffer,
               ['<M-p>'] = require('telescope.actions.layout').toggle_preview,
+              ['<c-q>'] = require('telescope.actions').smart_send_to_loclist.action,
             },
           },
         },
@@ -103,6 +77,22 @@ return {
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
+          },
+          media = {
+            backend = 'chafa', -- image/gif backend
+            flags = {
+              chafa = {
+                move = true, -- GIF preview
+              },
+            },
+            on_confirm_single = canned.single.copy_path,
+            on_confirm_muliple = canned.multiple.bulk_copy,
+            cache_path = vim.fn.stdpath 'cache' .. '/media',
+
+            -- backend = 'ueberzug',
+            -- backend_options = {
+            --   ueberzug = { xmove = -1, ymove = -1 },
+            -- },
           },
           -- live_grep_args = {
           --   auto_quoting = true,
@@ -121,9 +111,9 @@ return {
           -- },
         },
       }
-
       -- Enable Telescope extensions if they are installed
       pcall(require('telescope').load_extension, 'fzf')
+      pcall(require('telescope').load_extension, 'media')
       pcall(require('telescope').load_extension, 'ui-select')
       pcall(require('telescope').load_extension, 'live_grep_args')
       pcall(require('telescope').load_extension, 'remote-sshfs')
@@ -142,17 +132,6 @@ return {
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
-
-      -- vim.keymap.set('n', '<space>fb', function()
-      --   extensions.file_browser.file_browser { grouped = true }
-      -- end, { desc = '[S]earch File [B]rowser' })
-      --
-      -- -- open file_browser with the path of the current buffer
-      -- vim.keymap.set('n', '<space>fB', function()
-      --   extensions.file_browser.file_browser { grouped = true, path = '%:p:h', select_buffer = true }
-      -- end, { desc = '[S]earch File browser current [B]uffer' })
-
-      -- ':Telescope file_browser path=%:p:h select_buffer=true<CR>')
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
@@ -176,6 +155,20 @@ return {
       vim.keymap.set('n', '<leader>sn', function()
         builtin.find_files { cwd = '~/.config/nvim', follow = true }
       end, { desc = '[S]earch [N]eovim files' })
+
+      -- Create the 'TelescopeGrepCurDir' command
+      vim.api.nvim_create_user_command('TelescopeGrepCurDir', function()
+        require('telescope.builtin').live_grep {
+          search_dirs = { vim.fn.expand '%:p:h' },
+        }
+      end, { desc = "Live grep in current buffer's directory" })
+
+      -- Create the 'TelescopeFindCurDir' command
+      vim.api.nvim_create_user_command('TelescopeFindCurDir', function()
+        require('telescope.builtin').find_files {
+          search_dirs = { vim.fn.expand '%:p:h' },
+        }
+      end, { desc = "Find files in current buffer's directory" })
     end,
   },
 }

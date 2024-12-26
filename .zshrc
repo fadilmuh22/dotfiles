@@ -112,7 +112,10 @@ _fix_cursor() {
   echo -ne '\e[5 q'
 }
 
-precmd_functions+=(_fix_cursor)
+precmd() {
+	[[ $TERM == "alacritty" ]] && print "\033]0;:> $(pwd)"
+	_fix_cursor
+}
 
 PS1='\[\033[01;32m\]\u@\h \[\033[01;34m\]\w\$ '
 

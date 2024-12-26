@@ -34,3 +34,6 @@ export PATH=$PATH:$HOME/fvm/default/bin
 # export PATH=$PATH:$ANDROID_HOME/platform-tools
 # export PATH=$PATH:$ANDROID_HOME/tools/bin/sdkmanager
 # export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
+
+export FLYCTL_INSTALL="$HOME/.fly"
+export PATH="$FLYCTL_INSTALL/bin:$PATH"

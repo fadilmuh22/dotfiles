@@ -4,24 +4,17 @@
 --  For more options, you can see `:help option-list`
 
 vim.opt.foldenable = false
-
---  folds are defined by a user-defined expression (tree-sitter)
 vim.opt.foldmethod = 'expr'
-
--- let tree-sitter define folds
 vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.wo.foldlevel = 99
 
--- Make line numbers default
 vim.opt.number = true
--- You can also add relative line numbers, to help with jumping.
---  Experiment for yourself to see if you like it!
 vim.wo.relativenumber = true
+vim.opt.showmode = false
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
 
--- Don't show the mode, since it's already in the status line
-vim.opt.showmode = false
 
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
@@ -32,11 +25,9 @@ vim.schedule(function()
 end)
 
 -- Line ending based on file
--- vim.opt.fileformats = 'unix,dos,mac'
-
+vim.opt.fileformats = 'unix,dos,mac'
 -- Enable break indent
 vim.opt.breakindent = true
-
 -- Save undo history
 vim.opt.undofile = true
 
@@ -72,5 +63,7 @@ vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
+
+vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
 -- vim: ts=2 sts=2 sw=2 et
