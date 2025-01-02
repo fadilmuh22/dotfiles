@@ -169,6 +169,9 @@ return {
           search_dirs = { vim.fn.expand '%:p:h' },
         }
       end, { desc = "Find files in current buffer's directory" })
+
+      vim.keymap.set('n', '<leader>s,', ':TelescopeGrepCurDir<CR>', { desc = "Live grep in current buffer's directory" })
+      vim.keymap.set('n', '<leader>s.', ':TelescopeFindCurDir<CR>', { desc = "Find files in current buffer's directory" })
     end,
   },
 }

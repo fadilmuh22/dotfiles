@@ -7,10 +7,8 @@ return {
         useDefaults = true,
       },
     },
-    config = function(_, opts)
+    init = function()
       vim.keymap.set('n', 'gx', function()
-        require('various-textobjs').setup(opts)
-
         -- select URL
         require('various-textobjs').url()
 
