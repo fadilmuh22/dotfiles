@@ -9,7 +9,7 @@ return {
   config = function(_, opts)
     local oil = require("oil")
 
-    oil.setup { opts }
+    oil.setup(opts)
 
     vim.api.nvim_create_user_command("Explore", function()
       oil.open()

@@ -13,8 +13,8 @@ export BOTTLES_HOME=$HOME/.var/app/com.usebottles.bottles/data/bottles/bottles/H
 export BOTTLES_GAMES=$BOTTLES_HOME/Games
 export MY_GAMES=$HOME/Games
 
-export ANDROID_SDK_ROOT=$HOME/android_sdk
-export ANDROID_HOME=$HOME/android_sdk
+export ANDROID_SDK_ROOT=$HOME/Android/Sdk
+export ANDROID_HOME=$HOME/Android/Sdk
 export ANDROID_AVD_HOME=$HOME/.android/avd
 
 . "$HOME/.cargo/env"

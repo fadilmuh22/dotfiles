@@ -72,6 +72,11 @@ return {
             follow = true,
             hidden = true,
           },
+
+          buffers = {
+            ignore_current_buffer = true,
+            sort_lastused = true,
+          },
         },
 
         extensions = {

@@ -4,11 +4,16 @@
 [ -z "$TMUX" ] && exit
 [ "$#" -eq 1 ] || exit 1
 
-newstyle="$1"
+original_window_name=$(tmux display-message -p "#{window_name}")
+
+newstyle=$(~/.scripts/host_generate_colors.sh "$1")
+
+tmux rename-window "$1"
 
 # Set the new status-style
 tmux set-option -g status-style "$newstyle"
 
 # Wait for the parent process (tmux) to exit, then reload tmux configuration
 ( tail --pid="$PPID" -f /dev/null
-  tmux source-file ~/.tmux.conf ) &
+  tmux source-file ~/.config/tmux/tmux.conf
+  tmux setw automatic-rename ) &
