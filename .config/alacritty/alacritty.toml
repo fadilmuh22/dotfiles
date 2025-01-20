@@ -17,8 +17,8 @@ dimensions = { columns = 90, lines = 30}
 dynamic_title = true
 
 [window.padding]
-x = 10
-y = 10
+x = 0
+y = 0
 
 [font]
 size = 14.0

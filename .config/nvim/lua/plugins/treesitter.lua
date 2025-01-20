@@ -1,5 +1,20 @@
 return {
   {
+    'numToStr/Comment.nvim',
+    opts = {},
+    config = function()
+      require('Comment').setup {
+        pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+      }
+    end,
+  },
+  {
+    'laytan/tailwind-sorter.nvim',
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-lua/plenary.nvim' },
+    build = 'cd formatter && npm ci && npm run build',
+    config = true,
+  },
+  {
     'chrisgrieser/nvim-various-textobjs',
     event = 'VeryLazy',
     opts = {

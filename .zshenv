@@ -4,7 +4,9 @@ alias cat='bat'
 alias tree='tre'
 alias fd=fdfind
 
-export FCEDIT=nvim
+export EDITOR=vim
+export FCEDIT=vim
+
 export XDG_CONFIG_HOME=$HOME/.config
 export NVIM_CONFIG=$XDG_CONFIG_HOME/nvim
 export MYVIMRC=$NVIM_CONFIG/init.lua
@@ -15,7 +17,7 @@ export MY_GAMES=$HOME/Games
 
 export ANDROID_SDK_ROOT=$HOME/Android/Sdk
 export ANDROID_HOME=$HOME/Android/Sdk
-export ANDROID_AVD_HOME=$HOME/.android/avd
+export ANDROID_AVD_HOME=$HOME/.config/.android/avd
 
 . "$HOME/.cargo/env"
 
@@ -30,10 +32,10 @@ export PATH=$PATH:$HOME/.npm/bin
 export PATH=$PATH:$HOME/go/bin
 export PATH=$PATH:$HOME/fvm/default/bin
 
-# export PATH=$PATH:$ANDROID_HOME/emulator
-# export PATH=$PATH:$ANDROID_HOME/platform-tools
-# export PATH=$PATH:$ANDROID_HOME/tools/bin/sdkmanager
-# export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH=$PATH:$ANDROID_HOME/tools/bin/sdkmanager
+export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
 
 export FLYCTL_INSTALL="$HOME/.fly"
 export PATH="$FLYCTL_INSTALL/bin:$PATH"

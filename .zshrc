@@ -99,6 +99,12 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 [[ -f /home/fadillads/.config/.dart-cli-completion/zsh-config.zsh ]] && . /home/fadillads/.config/.dart-cli-completion/zsh-config.zsh || true
 ## [/Completion]
 
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey "^X^E" edit-command-line
+
+eval "$(pay-respects zsh --alias yala)"
+
 ssh() {
   host=$(echo "$@" | sed -E 's/.*@([^ ]+).*/\1/')
 
