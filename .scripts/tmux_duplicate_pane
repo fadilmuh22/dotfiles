@@ -1,14 +1,21 @@
 #!/bin/bash
 set -e
 
+# Get the current pane's PID and working directory
 pid="$(tmux display-message -p '#{pane_pid}')"
 pid="$(ps -o tpgid:1= -p "$pid")"
 dir="$(readlink -f "/proc/$pid/cwd")"
 cd -- "${dir:?}"
+
+# Get the executable and arguments
 exe="$(readlink -f "/proc/$pid/exe")"
 readarray -d '' args <"/proc/$pid/cmdline"
 name="${args[0]}"
 args=("${args[@]:1}")
 
-tmux split-window "$@" -c "$dir" bash -c "exec -a ${name@Q} ${exe@Q} ${args[*]@Q}"
-
+# Check for -h for horizontal split
+if [[ "$1" == "-h" ]]; then
+  tmux split-window -h -c "$dir" bash -c "exec -a ${name@Q} ${exe@Q} ${args[*]@Q}"
+else
+  tmux split-window -c "$dir" bash -c "exec -a ${name@Q} ${exe@Q} ${args[*]@Q}"
+fi

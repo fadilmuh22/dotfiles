@@ -13,8 +13,7 @@ vim.wo.relativenumber = true
 vim.opt.showmode = false
 
 -- Enable mouse mode, can be useful for resizing splits for example!
-vim.opt.mouse = 'a'
-
+vim.o.mouse = ''
 
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
