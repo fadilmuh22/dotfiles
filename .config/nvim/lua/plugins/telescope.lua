@@ -78,7 +78,6 @@ return {
             sort_lastused = true,
           },
         },
-
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
@@ -131,12 +130,12 @@ return {
       vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
       vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
       vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-      -- vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
       vim.keymap.set('n', '<leader>sg', extensions.live_grep_args.live_grep_args, { desc = '[S]earch by [G]rep' })
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+      vim.keymap.set('n', '<leader>st', builtin.treesitter, { desc = '[S]earch [T]reesitter' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
@@ -175,8 +174,15 @@ return {
         }
       end, { desc = "Find files in current buffer's directory" })
 
-      vim.keymap.set('n', '<leader>s,', ':TelescopeGrepCurDir<CR>', { desc = "Live grep in current buffer's directory" })
-      vim.keymap.set('n', '<leader>s.', ':TelescopeFindCurDir<CR>', { desc = "Find files in current buffer's directory" })
+      vim.keymap.set('n', '<leader>s,', function()
+        vim.cmd 'TelescopeGrepCurDir'
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>i', true, false, true), 'n', false)
+      end, { desc = "Live grep in current buffer's directory and enter visual mode" })
+
+      vim.keymap.set('n', '<leader>s.', function()
+        vim.cmd 'TelescopeFindCurDir'
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'n', false)
+      end, { desc = "Find files in current buffer's directory and enter visual mode" })
     end,
   },
 }

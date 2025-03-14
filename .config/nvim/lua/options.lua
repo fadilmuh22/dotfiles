@@ -21,6 +21,27 @@ vim.o.mouse = ''
 --  See `:help 'clipboard'`
 vim.schedule(function()
   vim.opt.clipboard = 'unnamedplus'
+  vim.api.nvim_create_autocmd('BufAdd', {
+    callback = function()
+      local buffers = vim.api.nvim_list_bufs()
+      local count = 0
+      for _, buf in ipairs(buffers) do
+        if vim.api.nvim_buf_is_loaded(buf) then
+          count = count + 1
+        end
+      end
+
+      if count > 25 then
+        -- Find the oldest buffer that is not modified
+        for _, buf in ipairs(buffers) do
+          if vim.api.nvim_buf_is_loaded(buf) and not vim.api.nvim_get_option_value('modified', { buf = buf }) then
+            vim.api.nvim_buf_delete(buf, { force = true })
+            break
+          end
+        end
+      end
+    end,
+  })
 end)
 
 -- Line ending based on file
@@ -63,6 +84,6 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
-vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions'
 
 -- vim: ts=2 sts=2 sw=2 et

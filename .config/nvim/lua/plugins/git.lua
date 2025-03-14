@@ -1,4 +1,5 @@
 return {
+  { 'tpope/vim-fugitive' },
   { -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     opts = {
@@ -64,17 +65,15 @@ return {
   {
     'NeogitOrg/neogit',
     dependencies = {
-      'nvim-lua/plenary.nvim', -- required
-      'sindrets/diffview.nvim', -- optional - Diff integration
+      'nvim-lua/plenary.nvim',
+      'sindrets/diffview.nvim',
 
-      -- Only one of these is needed.
-      'nvim-telescope/telescope.nvim', -- optional
-      'ibhagwan/fzf-lua', -- optional
-      'echasnovski/mini.pick', -- optional
+      'nvim-telescope/telescope.nvim',
     },
-    config = true,
+    config = function()
+      vim.keymap.set('n', '<leader>ln', '<cmd>Neogit<cr>', { desc = 'Neogit' })
+    end,
   },
-  { 'tpope/vim-fugitive' },
   {
     'kdheepak/lazygit.nvim',
     lazy = true,
@@ -85,7 +84,6 @@ return {
       'LazyGitFilter',
       'LazyGitFilterCurrentFile',
     },
-    -- optional for floating window border decoration
     dependencies = {
       'nvim-lua/plenary.nvim',
     },
