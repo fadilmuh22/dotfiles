@@ -57,13 +57,13 @@ return {
             n = {
               ['<c-d>'] = require('telescope.actions').delete_buffer,
               ['<M-p>'] = require('telescope.actions.layout').toggle_preview,
-              ['<c-q>'] = require('telescope.actions').smart_send_to_loclist.action,
+              ['<M-q>'] = require('telescope.actions').smart_send_to_loclist.action,
             },
             i = {
               ['<c-space>'] = 'to_fuzzy_refine',
               ['<c-d>'] = require('telescope.actions').delete_buffer,
               ['<M-p>'] = require('telescope.actions.layout').toggle_preview,
-              ['<c-q>'] = require('telescope.actions').smart_send_to_loclist.action,
+              ['<M-q>'] = require('telescope.actions').smart_send_to_loclist.action,
             },
           },
         },
