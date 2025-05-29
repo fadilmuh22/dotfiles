@@ -1,0 +1,10 @@
+command = /bin/bash -c ~/.scripts/tmux_chooser.sh
+clipboard-read = allow
+clipboard-write = allow
+copy-on-select = true
+window-decoration = none
+theme = Kanagawa Wave
+bold-is-bright = true
+font-family = JetBrainsMono NF
+font-feature = -calt
+cursor-click-to-move = false

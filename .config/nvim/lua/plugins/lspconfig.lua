@@ -43,7 +43,17 @@ return {
       'nvim-lua/plenary.nvim',
       'stevearc/dressing.nvim', -- optional for vim.ui.select
     },
-    opts = {},
+    opts = {
+      debugger = {
+        enable = true,
+      },
+      lsp = {
+        color = {
+          enabled = true,
+          background = true,
+        }
+      }
+    },
   },
   {
     -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
