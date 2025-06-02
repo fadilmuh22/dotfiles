@@ -6,9 +6,9 @@
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '<leader>d', '"_d', { desc = '[D]elete not cut' })
+vim.keymap.set('n', '<leader>d', '"_d', { noremap = true, desc = '[D]elete not cut' })
 vim.keymap.set('n', '<leader>bd', ':bd<CR>')
-vim.keymap.set("n", "<leader>bo", "<cmd>%bd|e#<cr>", {desc="Close all buffers but the current one"}) -- https://stackoverflow.com/a/42071865/516188
+vim.keymap.set('n', '<leader>bo', '<cmd>%bd|e#<cr>', { desc = 'Close all buffers but the current one' }) -- https://stackoverflow.com/a/42071865/516188
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -51,5 +51,14 @@ vim.keymap.set('n', '+', [[<cmd>vertical resize +5<cr>]]) -- make the window big
 vim.keymap.set('n', '_', [[<cmd>vertical resize -5<cr>]]) -- make the window smaller vertically
 vim.keymap.set('n', '=', [[<cmd>horizontal resize +2<cr>]]) -- make the window bigger horizontally by pressing shift and =
 vim.keymap.set('n', '-', [[<cmd>horizontal resize -2<cr>]]) -- make the window smaller horizontally by pressing shift and -
+
+vim.keymap.set('n', '<C-W>d', function()
+  vim.diagnostic.open_float(nil, {
+    border = 'rounded',
+    width = 80, -- adjust this to your preferred width
+    max_width = 80, -- optional, supported in recent versions
+    focusable = false,
+  })
+end, { noremap = true, silent = true })
 
 -- vim: ts=2 sts=2 sw=2 et
