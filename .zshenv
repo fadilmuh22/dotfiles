@@ -18,6 +18,7 @@ export MY_GAMES=$HOME/Games
 export ANDROID_SDK_ROOT=$HOME/Android/Sdk
 export ANDROID_HOME=$HOME/Android/Sdk
 export ANDROID_AVD_HOME=$HOME/.config/.android/avd
+export CHROME_EXECUTABLE=/usr/bin/chromium-browser
 
 . "$HOME/.cargo/env"
 
