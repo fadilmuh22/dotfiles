@@ -5,7 +5,7 @@
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
--- Diagnostic keymaps
+-- Buffers keymaps
 vim.keymap.set('n', '<leader>d', '"_d', { noremap = true, desc = '[D]elete not cut' })
 vim.keymap.set('n', '<leader>bd', ':bd<CR>')
 vim.keymap.set('n', '<leader>bo', '<cmd>%bd|e#<cr>', { desc = 'Close all buffers but the current one' }) -- https://stackoverflow.com/a/42071865/516188
@@ -52,13 +52,38 @@ vim.keymap.set('n', '_', [[<cmd>vertical resize -5<cr>]]) -- make the window sma
 vim.keymap.set('n', '=', [[<cmd>horizontal resize +2<cr>]]) -- make the window bigger horizontally by pressing shift and =
 vim.keymap.set('n', '-', [[<cmd>horizontal resize -2<cr>]]) -- make the window smaller horizontally by pressing shift and -
 
-vim.keymap.set('n', '<C-W>d', function()
-  vim.diagnostic.open_float(nil, {
-    border = 'rounded',
-    width = 80, -- adjust this to your preferred width
-    max_width = 80, -- optional, supported in recent versions
-    focusable = false,
-  })
-end, { noremap = true, silent = true })
+-- Global state to track the diagnostic float window
+-- _G.diagnostic_float_win = nil
+
+-- vim.keymap.set('n', '<C-w><C-d>', function()
+--   -- If float window exists and is still valid, focus it
+--   if _G.diagnostic_float_win and vim.api.nvim_win_is_valid(_G.diagnostic_float_win) then
+--     vim.api.nvim_set_current_win(_G.diagnostic_float_win)
+--     return
+--   end
+--
+--   -- Otherwise, open a new diagnostic float and store its window ID
+--   local opts = {
+--     border = 'rounded',
+--     max_width = 80,
+--     focusable = true,
+--   }
+--
+--   local _bufnr, winnr = vim.diagnostic.open_float(nil, opts)
+--   if winnr then
+--     _G.diagnostic_float_win = winnr
+--   end
+-- end, { noremap = true, silent = true, desc = 'Toggle diagnostic float and focus' })
+
+vim.keymap.set('n', '<leader>cp', function()
+  local filepath = vim.api.nvim_buf_get_name(0)
+  local root = vim.fn.system('git rev-parse --show-toplevel'):gsub('\n', '')
+  local relpath = filepath:sub(#root + 2)
+  local row = vim.fn.line '.'
+  local col = vim.fn.col '.'
+  local final = string.format('%s:%d:%d', relpath, row, col)
+  vim.fn.setreg('+', final)
+  print('Copied: ' .. final)
+end, { desc = 'Copy file path from project root with line & col' })
 
 -- vim: ts=2 sts=2 sw=2 et

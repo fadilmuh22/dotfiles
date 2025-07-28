@@ -9,13 +9,16 @@ return {
       close_tag_on_complete = true, -- default: true
     },
   },
-  {
-    'giuxtaposition/blink-cmp-copilot',
-  },
+  -- {
+  --   'giuxtaposition/blink-cmp-copilot',
+  -- },
   {
     'saghen/blink.cmp',
     -- optional: provides snippets for the snippet source
-    dependencies = 'rafamadriz/friendly-snippets',
+    dependencies = {
+      { 'rafamadriz/friendly-snippets' },
+      -- { 'giuxtaposition/blink-cmp-copilot' },
+    },
     version = 'v0.8.2',
 
     ---@module 'blink.cmp'
@@ -33,15 +36,48 @@ return {
 
       signature = { enabled = true },
 
+      --
+      -- fuzzy = { implementation = 'prefer_rust_with_warning' },
       appearance = {
         use_nvim_cmp_as_default = true,
         nerd_font_variant = 'mono',
+        kind_icons = {
+          Copilot = '',
+          Text = '󰉿',
+          Method = '󰊕',
+          Function = '󰊕',
+          Constructor = '󰒓',
+
+          Field = '󰜢',
+          Variable = '󰆦',
+          Property = '󰖷',
+
+          Class = '󱡠',
+          Interface = '󱡠',
+          Struct = '󱡠',
+          Module = '󰅩',
+
+          Unit = '󰪚',
+          Value = '󰦨',
+          Enum = '󰦨',
+          EnumMember = '󰦨',
+
+          Keyword = '󰻾',
+          Constant = '󰏿',
+
+          Snippet = '󱄽',
+          Color = '󰏘',
+          File = '󰈔',
+          Reference = '󰬲',
+          Folder = '󰉋',
+          Event = '󱐋',
+          Operator = '󰪚',
+          TypeParameter = '󰬛',
+        },
       },
 
-      -- fuzzy = { implementation = 'prefer_rust_with_warning' },
-
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer', 'copilot', 'luasnip', 'easy-dotnet' },
+        default = { 'lsp', 'path', 'snippets', 'buffer', 'luasnip', 'easy-dotnet' },
 
         providers = {
           ['easy-dotnet'] = {
@@ -51,14 +87,22 @@ return {
             score_offset = 10000,
             async = true,
           },
-          copilot = {
-            name = 'copilot',
-            enabled = true,
-            module = 'blink-cmp-copilot',
-            min_keyword_length = 2,
-            score_offset = -100,
-            async = true,
-          },
+          -- copilot = {
+          --   name = 'copilot',
+          --   enabled = true,
+          --   module = 'blink-cmp-copilot',
+          --   score_offset = -100,
+          --   async = true,
+          --   transform_items = function(_, items)
+          --     local CompletionItemKind = require('blink.cmp.types').CompletionItemKind
+          --     local kind_idx = #CompletionItemKind + 1
+          --     CompletionItemKind[kind_idx] = 'Copilot'
+          --     for _, item in ipairs(items) do
+          --       item.kind = kind_idx
+          --     end
+          --     return items
+          --   end,
+          -- },
           luasnip = {
             name = 'luasnip',
             enabled = true,

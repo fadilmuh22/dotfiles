@@ -19,29 +19,9 @@ vim.o.mouse = ''
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
+--
 vim.schedule(function()
   vim.opt.clipboard = 'unnamedplus'
-  vim.api.nvim_create_autocmd('BufAdd', {
-    callback = function()
-      local buffers = vim.api.nvim_list_bufs()
-      local count = 0
-      for _, buf in ipairs(buffers) do
-        if vim.api.nvim_buf_is_loaded(buf) then
-          count = count + 1
-        end
-      end
-
-      if count > 25 then
-        -- Find the oldest buffer that is not modified
-        for _, buf in ipairs(buffers) do
-          if vim.api.nvim_buf_is_loaded(buf) and not vim.api.nvim_get_option_value('modified', { buf = buf }) then
-            vim.api.nvim_buf_delete(buf, { force = true })
-            break
-          end
-        end
-      end
-    end,
-  })
 end)
 
 -- Line ending based on file

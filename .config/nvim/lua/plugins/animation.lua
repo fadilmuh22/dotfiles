@@ -3,7 +3,8 @@ return {
     'karb94/neoscroll.nvim',
     opts = {},
     config = function()
-      require('neoscroll').setup {
+      local neoscroll = require 'neoscroll'
+      neoscroll.setup {
         pre_hook = function()
           vim.opt.eventignore:append {
             'WinScrolled',
@@ -19,8 +20,4 @@ return {
       }
     end,
   },
-  -- {
-  --   'sphamba/smear-cursor.nvim',
-  --   opts = {},
-  -- },
 }

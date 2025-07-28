@@ -1,1 +1,62 @@
-* text eol=lf
+# Text files - normalize line endings to LF
+* text=auto eol=lf
+
+# Binary files - prevent Git from applying any filters
+# Images
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.bmp binary
+*.ico binary
+*.webp binary
+*.svg binary
+
+# Fonts
+*.ttf binary
+*.otf binary
+*.woff binary
+*.woff2 binary
+*.eot binary
+
+# Audio/Video
+*.mp3 binary
+*.wav binary
+*.mp4 binary
+*.mov binary
+*.avi binary
+*.mkv binary
+*.webm binary
+
+# Archives and compressed files
+*.zip binary
+*.tar binary
+*.gz binary
+*.rar binary
+*.7z binary
+*.xz binary
+*.bz2 binary
+
+# Executables and libraries
+*.exe binary
+*.dll binary
+*.so binary
+*.dylib binary
+*.bin binary
+*.class binary
+*.o binary
+*.a binary
+
+# Documents
+*.pdf binary
+*.doc binary
+*.docx binary
+*.ppt binary
+*.pptx binary
+*.xls binary
+*.xlsx binary
+
+# Others (add more as needed)
+*.psd binary
+*.ai binary
+

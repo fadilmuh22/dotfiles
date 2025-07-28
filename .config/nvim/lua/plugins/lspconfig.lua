@@ -44,26 +44,26 @@ return {
     ft = { 'go', 'gomod' },
     build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
   },
-  {
-    'pmizio/typescript-tools.nvim',
-    dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
-    opts = {
-      filetypes = {
-        'javascript',
-        'javascriptreact',
-        'typescript',
-        'typescriptreact',
-
-        'vue',
-      },
-      settings = {
-        tsserver_node_executable = 'bun',
-        tsserver_plugins = {
-          '@vue/typescript-plugin',
-        },
-      },
-    },
-  },
+  -- {
+  --   'pmizio/typescript-tools.nvim',
+  --   dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
+  --   opts = {
+  --     filetypes = {
+  --       'javascript',
+  --       'javascriptreact',
+  --       'typescript',
+  --       'typescriptreact',
+  --
+  --       'vue',
+  --     },
+  --     settings = {
+  --       tsserver_node_executable = 'bun',
+  --       tsserver_plugins = {
+  --         '@vue/typescript-plugin',
+  --       },
+  --     },
+  --   },
+  -- },
   {
     'nvim-flutter/flutter-tools.nvim',
     lazy = false,
@@ -72,6 +72,7 @@ return {
       'stevearc/dressing.nvim', -- optional for vim.ui.select
     },
     opts = {
+      root_patterns = { '.git' },
       debugger = {
         enable = true,
       },

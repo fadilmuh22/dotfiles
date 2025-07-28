@@ -37,6 +37,25 @@ return {
     config = function()
       local canned = require 'telescope._extensions.media.lib.canned'
       local data = assert(vim.fn.stdpath 'data') --[[@as string]]
+      local action_state = require 'telescope.actions.state'
+
+      function toggle_all()
+        local prompt_bufnr = vim.api.nvim_get_current_buf()
+        local current_picker = action_state.get_current_picker(prompt_bufnr)
+        local i = 1
+        for entry in current_picker.manager:iter() do
+          current_picker._multi:toggle(entry)
+          -- highlighting
+          local row = current_picker:get_row(i)
+          -- validate row is visible; otherwise result negative
+          if row > 0 then
+            if current_picker:can_select_row(row) then
+              current_picker.highlighter:hi_multiselect(row, current_picker._multi:is_selected(entry))
+            end
+          end
+          i = i + 1
+        end
+      end
 
       require('telescope').setup {
         defaults = {
@@ -55,15 +74,22 @@ return {
           },
           mappings = {
             n = {
-              ['<c-d>'] = require('telescope.actions').delete_buffer,
-              ['<M-p>'] = require('telescope.actions.layout').toggle_preview,
-              ['<M-q>'] = require('telescope.actions').smart_send_to_loclist.action,
+              ['<c-a>'] = toggle_all,
+              ['<c-space>'] = 'to_fuzzy_refine',
+              ['<a-d>'] = require('telescope.actions').delete_buffer,
+              ['<m-p>'] = require('telescope.actions.layout').toggle_preview,
+              ['<m-q>'] = require('telescope.actions').smart_send_to_loclist.action,
+              ['<c-u>'] = require('telescope.actions').preview_scrolling_up,
+              ['<c-d>'] = require('telescope.actions').preview_scrolling_down,
             },
             i = {
+              ['<c-a>'] = toggle_all,
               ['<c-space>'] = 'to_fuzzy_refine',
-              ['<c-d>'] = require('telescope.actions').delete_buffer,
-              ['<M-p>'] = require('telescope.actions.layout').toggle_preview,
-              ['<M-q>'] = require('telescope.actions').smart_send_to_loclist.action,
+              ['<m-d>'] = require('telescope.actions').delete_buffer,
+              ['<m-p>'] = require('telescope.actions.layout').toggle_preview,
+              ['<m-q>'] = require('telescope.actions').smart_send_to_loclist.action,
+              ['<c-u>'] = require('telescope.actions').preview_scrolling_up,
+              ['<c-d>'] = require('telescope.actions').preview_scrolling_down,
             },
           },
         },
