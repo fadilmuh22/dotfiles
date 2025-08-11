@@ -2,6 +2,7 @@
 return {
   {
     'seblyng/roslyn.nvim',
+    -- commit = '0d298e6',
     ft = 'cs',
     ---@module 'roslyn.config'
     ---@type RoslynNvimConfig
@@ -234,7 +235,12 @@ return {
         },
       }
 
-      require('mason').setup()
+      require('mason').setup {
+        registries = {
+          'github:mason-org/mason-registry',
+          'github:Crashdummyy/mason-registry',
+        },
+      }
 
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {

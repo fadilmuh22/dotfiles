@@ -86,4 +86,7 @@ vim.keymap.set('n', '<leader>cp', function()
   print('Copied: ' .. final)
 end, { desc = 'Copy file path from project root with line & col' })
 
+-- Clipboard
+vim.keymap.set("v", "<leader>y", '"+y')
+
 -- vim: ts=2 sts=2 sw=2 et

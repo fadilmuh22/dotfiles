@@ -15,15 +15,6 @@ vim.opt.showmode = false
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.o.mouse = ''
 
--- Sync clipboard between OS and Neovim.
---  Schedule the setting after `UiEnter` because it can increase startup-time.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
---
-vim.schedule(function()
-  vim.opt.clipboard = 'unnamedplus'
-end)
-
 -- Line ending based on file
 vim.opt.fileformats = 'unix,dos,mac'
 -- Enable break indent
