@@ -8,3 +8,4 @@ bold-is-bright = true
 font-family = JetBrainsMono NF
 font-feature = -calt
 cursor-click-to-move = false
+adjust-cursor-thickness=4

@@ -1,9 +1,11 @@
 return {
   {
-    "numToStr/FTerm.nvim",
+    'voldikss/vim-floaterm',
     config = function()
-      vim.keymap.set('n', '<A-i>', '<CMD>lua require("FTerm").toggle()<CR>')
-      vim.keymap.set('t', '<A-i>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
-    end
-  }
+      vim.g.floaterm_width = 0.7
+      vim.g.floaterm_height = 0.8
+      vim.keymap.set('n', '<A-i>', ':FloatermToggle<CR>')
+      vim.keymap.set('t', '<A-i>', '<C-\\><C-n><CMD>:FloatermToggle<CR>')
+    end,
+  },
 }

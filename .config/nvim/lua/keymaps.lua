@@ -47,6 +47,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+vim.keymap.set("v", "<leader>y", '"+y', { noremap = true })
+
 vim.keymap.set('n', '+', [[<cmd>vertical resize +5<cr>]]) -- make the window biger vertically
 vim.keymap.set('n', '_', [[<cmd>vertical resize -5<cr>]]) -- make the window smaller vertically
 vim.keymap.set('n', '=', [[<cmd>horizontal resize +2<cr>]]) -- make the window bigger horizontally by pressing shift and =
@@ -85,5 +87,36 @@ vim.keymap.set('n', '<leader>cp', function()
   vim.fn.setreg('+', final)
   print('Copied: ' .. final)
 end, { desc = 'Copy file path from project root with line & col' })
+
+local function toggle_terminal()
+  local term_buf = nil
+  -- Find an existing terminal buffer
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_get_option_value('buftype', { buf = buf }) == 'terminal' then
+      term_buf = buf
+      break
+    end
+  end
+
+  if term_buf and vim.api.nvim_buf_is_loaded(term_buf) then
+    -- Check if the terminal is currently visible
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+      if vim.api.nvim_win_get_buf(win) == term_buf then
+        -- Close the window if it's visible
+        vim.api.nvim_win_close(win, true)
+        return
+      end
+    end
+    -- Terminal exists but is not visible, so open it
+    vim.cmd 'vsplit'
+    vim.api.nvim_win_set_buf(0, term_buf)
+  else
+    -- No terminal buffer found, so create a new one
+    vim.cmd 'vsplit | terminal'
+  end
+end
+
+vim.keymap.set('n', '<C-i>', toggle_terminal, { desc = 'Toggle terminal', noremap = true, silent = true })
+vim.keymap.set('t', '<C-i>', '<C-\\><C-n>:q<CR>', { desc = 'Close terminal', noremap = true, silent = true })
 
 -- vim: ts=2 sts=2 sw=2 et

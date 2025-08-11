@@ -1,5 +1,13 @@
 return {
-  { 'tpope/vim-fugitive' },
+  {
+    'tpope/vim-fugitive',
+    config = function()
+      vim.keymap.set('n', '<leader>gg', '<cmd>Git<cr>', { desc = 'Fugitive' })
+      vim.keymap.set('n', '<leader>gt', ':tab Git<CR>', { desc = 'Fugitive tab'})
+      vim.keymap.set('n', '<leader>gv', ':vertical Git<CR>', { desc = 'Fugitive vertical'})
+      vim.keymap.set('n', '<leader>gc', ':vertical Git log --patch %<CR>', { desc = 'Fugitive log current'})
+    end,
+  },
   { -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     opts = {
@@ -61,17 +69,5 @@ return {
         map('n', '<leader>tD', gitsigns.toggle_deleted, { desc = '[T]oggle git show [D]eleted' })
       end,
     },
-  },
-  {
-    'NeogitOrg/neogit',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'sindrets/diffview.nvim',
-
-      'nvim-telescope/telescope.nvim',
-    },
-    config = function()
-      vim.keymap.set('n', '<leader>ln', '<cmd>Neogit<cr>', { desc = 'Neogit' })
-    end,
   },
 }
