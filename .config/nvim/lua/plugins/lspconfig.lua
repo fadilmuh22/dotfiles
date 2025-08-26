@@ -2,13 +2,65 @@
 return {
   {
     'seblyng/roslyn.nvim',
-    -- commit = '0d298e6',
-    ft = 'cs',
-    ---@module 'roslyn.config'
-    ---@type RoslynNvimConfig
-    opts = {
-      -- your configuration comes here; leave empty for default settings
+    ft = { 'cs', 'razor' },
+    dependencies = {
+      {
+        -- By loading as a dependencies, we ensure that we are available to set
+        -- the handlers for Roslyn.
+        'tris203/rzls.nvim',
+        config = true,
+      },
     },
+    config = function()
+      local mason_registry = require 'mason-registry'
+
+      local rzls_path = vim.fn.expand '$MASON/packages/rzls/libexec'
+      local cmd = {
+        'roslyn',
+        '--stdio',
+        '--logLevel=Information',
+        '--extensionLogDirectory=' .. vim.fs.dirname(vim.lsp.get_log_path()),
+        '--razorSourceGenerator=' .. vim.fs.joinpath(rzls_path, 'Microsoft.CodeAnalysis.Razor.Compiler.dll'),
+        '--razorDesignTimePath=' .. vim.fs.joinpath(rzls_path, 'Targets', 'Microsoft.NET.Sdk.Razor.DesignTime.targets'),
+        '--extension',
+        vim.fs.joinpath(rzls_path, 'RazorExtension', 'Microsoft.VisualStudioCode.RazorExtension.dll'),
+      }
+
+      vim.lsp.config('roslyn', {
+        cmd = cmd,
+        handlers = require 'rzls.roslyn_handlers',
+        settings = {
+          ['csharp|inlay_hints'] = {
+            csharp_enable_inlay_hints_for_implicit_object_creation = true,
+            csharp_enable_inlay_hints_for_implicit_variable_types = true,
+
+            csharp_enable_inlay_hints_for_lambda_parameter_types = true,
+            csharp_enable_inlay_hints_for_types = true,
+            dotnet_enable_inlay_hints_for_indexer_parameters = true,
+            dotnet_enable_inlay_hints_for_literal_parameters = true,
+            dotnet_enable_inlay_hints_for_object_creation_parameters = true,
+            dotnet_enable_inlay_hints_for_other_parameters = true,
+            dotnet_enable_inlay_hints_for_parameters = true,
+            dotnet_suppress_inlay_hints_for_parameters_that_differ_only_by_suffix = true,
+            dotnet_suppress_inlay_hints_for_parameters_that_match_argument_name = true,
+            dotnet_suppress_inlay_hints_for_parameters_that_match_method_intent = true,
+          },
+          ['csharp|code_lens'] = {
+            dotnet_enable_references_code_lens = true,
+          },
+        },
+      })
+      vim.lsp.enable 'roslyn'
+    end,
+    init = function()
+      -- We add the Razor file types before the plugin loads.
+      -- vim.filetype.add {
+      --   extension = {
+      --     razor = 'razor',
+      --     cshtml = 'razor',
+      --   },
+      -- }
+    end,
   },
   {
     'GustavEikaas/easy-dotnet.nvim',
@@ -45,26 +97,6 @@ return {
     ft = { 'go', 'gomod' },
     build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
   },
-  -- {
-  --   'pmizio/typescript-tools.nvim',
-  --   dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
-  --   opts = {
-  --     filetypes = {
-  --       'javascript',
-  --       'javascriptreact',
-  --       'typescript',
-  --       'typescriptreact',
-  --
-  --       'vue',
-  --     },
-  --     settings = {
-  --       tsserver_node_executable = 'bun',
-  --       tsserver_plugins = {
-  --         '@vue/typescript-plugin',
-  --       },
-  --     },
-  --   },
-  -- },
   {
     'nvim-flutter/flutter-tools.nvim',
     lazy = false,
@@ -263,6 +295,94 @@ return {
         },
       }
     end,
+  },
+  {
+    'NickvanDyke/opencode.nvim',
+    dependencies = {
+      -- Recommended for better prompt input, and required to use opencode.nvim's embedded terminal. Otherwise optional.
+      { 'folke/snacks.nvim', opts = { input = { enabled = true } } },
+    },
+    ---@type opencode.Opts
+    opts = {
+      -- Your configuration, if any
+    },
+    keys = {
+      -- Recommended keymaps
+      {
+        '<leader>oA',
+        function()
+          require('opencode').ask()
+        end,
+        desc = 'Ask opencode',
+      },
+      {
+        '<leader>oa',
+        function()
+          require('opencode').ask '@cursor: '
+        end,
+        desc = 'Ask opencode about this',
+        mode = 'n',
+      },
+      {
+        '<leader>oa',
+        function()
+          require('opencode').ask '@selection: '
+        end,
+        desc = 'Ask opencode about selection',
+        mode = 'v',
+      },
+      {
+        '<leader>ot',
+        function()
+          require('opencode').toggle()
+        end,
+        desc = 'Toggle embedded opencode',
+      },
+      {
+        '<leader>on',
+        function()
+          require('opencode').command 'session_new'
+        end,
+        desc = 'New session',
+      },
+      {
+        '<leader>oy',
+        function()
+          require('opencode').command 'messages_copy'
+        end,
+        desc = 'Copy last message',
+      },
+      {
+        '<S-C-u>',
+        function()
+          require('opencode').command 'messages_half_page_up'
+        end,
+        desc = 'Scroll messages up',
+      },
+      {
+        '<S-C-d>',
+        function()
+          require('opencode').command 'messages_half_page_down'
+        end,
+        desc = 'Scroll messages down',
+      },
+      {
+        '<leader>op',
+        function()
+          require('opencode').select_prompt()
+        end,
+        desc = 'Select prompt',
+        mode = { 'n', 'v' },
+      },
+      -- Example: keymap for custom prompt
+      {
+        '<leader>oe',
+        function()
+          require('opencode').prompt 'Explain @cursor and its context'
+        end,
+        desc = 'Explain code near cursor',
+      },
+    },
   },
 }
 -- vim: ts=2 sts=2 sw=2 et

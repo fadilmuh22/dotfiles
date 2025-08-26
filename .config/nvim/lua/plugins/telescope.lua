@@ -61,6 +61,7 @@ return {
         defaults = {
           path_display = { 'smart' },
           sorting_strategy = 'ascending',
+          file_ignore_patterns = { '%__virtual.cs$' },
           layout_config = {
             prompt_position = 'top',
             horizontal = {
