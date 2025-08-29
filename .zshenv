@@ -40,3 +40,8 @@ export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
 
 export FLYCTL_INSTALL="$HOME/.fly"
 export PATH="$FLYCTL_INSTALL/bin:$PATH"
+
+export DOTNET_SYSTEM_CONSOLE_ALLOW_ANSI_COLOR_REDIRECTION=true
+export DOTNET_WATCH_SUPPRESS_LAUNCH_BROWSER=true
+
+. ~/.api-env

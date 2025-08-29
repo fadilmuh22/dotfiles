@@ -54,29 +54,6 @@ vim.keymap.set('n', '_', [[<cmd>vertical resize -5<cr>]]) -- make the window sma
 vim.keymap.set('n', '=', [[<cmd>horizontal resize +2<cr>]]) -- make the window bigger horizontally by pressing shift and =
 vim.keymap.set('n', '-', [[<cmd>horizontal resize -2<cr>]]) -- make the window smaller horizontally by pressing shift and -
 
--- Global state to track the diagnostic float window
--- _G.diagnostic_float_win = nil
-
--- vim.keymap.set('n', '<C-w><C-d>', function()
---   -- If float window exists and is still valid, focus it
---   if _G.diagnostic_float_win and vim.api.nvim_win_is_valid(_G.diagnostic_float_win) then
---     vim.api.nvim_set_current_win(_G.diagnostic_float_win)
---     return
---   end
---
---   -- Otherwise, open a new diagnostic float and store its window ID
---   local opts = {
---     border = 'rounded',
---     max_width = 80,
---     focusable = true,
---   }
---
---   local _bufnr, winnr = vim.diagnostic.open_float(nil, opts)
---   if winnr then
---     _G.diagnostic_float_win = winnr
---   end
--- end, { noremap = true, silent = true, desc = 'Toggle diagnostic float and focus' })
-
 vim.keymap.set('n', '<leader>cp', function()
   local filepath = vim.api.nvim_buf_get_name(0)
   local root = vim.fn.system('git rev-parse --show-toplevel'):gsub('\n', '')
