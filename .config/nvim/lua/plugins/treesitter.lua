@@ -62,6 +62,7 @@ return {
       ensure_installed = {
         'bash',
         'c',
+        'c_sharp',
         'diff',
         'html',
         'lua',
@@ -89,6 +90,8 @@ return {
       indent = { enable = true, disable = { 'ruby' } },
     },
     config = function(_, opts)
+      vim.treesitter.language.register('c_sharp', 'csharp')
+
       local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
 
       parser_config.blade = {
