@@ -6,6 +6,7 @@ return {
       local toggle_term = require 'toggleterm'
       toggle_term.setup {
         auto_scroll = false,
+        start_in_insert = true,
       }
 
       vim.keymap.set('n', '<A-i>', ':ToggleTerm name=float direction=float<CR>', { desc = 'Toggle terminal float' })

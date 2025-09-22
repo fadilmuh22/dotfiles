@@ -6,10 +6,6 @@
 -- Use the `dependencies` key to specify the dependencies of a particular plugin
 
 return {
-  -- {
-  --   'nvim-telescope/telescope-file-browser.nvim',
-  --   dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' },
-  -- },
   { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
     event = 'VimEnter',
@@ -149,6 +145,7 @@ return {
       pcall(require('telescope').load_extension, 'ui-select')
       pcall(require('telescope').load_extension, 'live_grep_args')
       pcall(require('telescope').load_extension, 'remote-sshfs')
+      pcall(require('telescope').load_extension 'git_worktree')
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
@@ -164,6 +161,8 @@ return {
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
       vim.keymap.set('n', '<leader>st', builtin.treesitter, { desc = '[S]earch [T]reesitter' })
+      vim.keymap.set('n', '<leader>wc', extensions.git_worktree.git_worktrees, { desc = '[W]orktree [c]hange' })
+      vim.keymap.set('n', '<leader>wC', extensions.git_worktree.create_git_worktree, { desc = '[W]orktree [C]reate' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()

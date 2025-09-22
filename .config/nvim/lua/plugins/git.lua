@@ -1,11 +1,13 @@
 return {
+  { 'ThePrimeagen/git-worktree.nvim' },
+  { 'sindrets/diffview.nvim' },
   {
     'tpope/vim-fugitive',
     config = function()
       vim.keymap.set('n', '<leader>gg', '<cmd>Git<cr>', { desc = 'Fugitive' })
-      vim.keymap.set('n', '<leader>gt', ':tab Git<CR>', { desc = 'Fugitive tab'})
-      vim.keymap.set('n', '<leader>gv', ':vertical Git<CR>', { desc = 'Fugitive vertical'})
-      vim.keymap.set('n', '<leader>gc', ':vertical Git log --patch %<CR>', { desc = 'Fugitive log current'})
+      vim.keymap.set('n', '<leader>gt', ':tab Git<CR>', { desc = 'Fugitive tab' })
+      vim.keymap.set('n', '<leader>gv', ':vertical Git<CR>', { desc = 'Fugitive vertical' })
+      vim.keymap.set('n', '<leader>gc', ':vertical Git log --patch %<CR>', { desc = 'Fugitive log current' })
     end,
   },
   { -- Adds git related signs to the gutter, as well as utilities for managing changes

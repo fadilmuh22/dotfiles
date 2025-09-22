@@ -251,11 +251,15 @@ return {
 
       local servers = {
         tailwindcss = {
-          tailwindCSS = {
-            experimental = {
-              classRegex = {
-                { 'cva\\(([^)]*)\\)', '["\'`]([^"\'`]*).*?["\'`]' },
-                { 'cx\\(([^)]*)\\)', "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+          settings = {
+            tailwindCSS = {
+              experimental = {
+                classRegex = {
+                  'cva\\(([^)]*)\\)',
+                  '["\'`]([^"\'`]*).*?["\'`]',
+                  'cx\\(([^)]*)\\)',
+                  "(?:'|\"|`)([^']*)(?:'|\"|`)",
+                },
               },
             },
           },
