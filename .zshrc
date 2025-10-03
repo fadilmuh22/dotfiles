@@ -126,3 +126,5 @@ precmd() {
 }
 
 PS1='\[\033[01;32m\]\u@\h \[\033[01;34m\]\w\$ '
+
+export PATH=$PATH:/home/fadil/.spicetify

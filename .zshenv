@@ -45,3 +45,8 @@ export DOTNET_SYSTEM_CONSOLE_ALLOW_ANSI_COLOR_REDIRECTION=true
 export DOTNET_WATCH_SUPPRESS_LAUNCH_BROWSER=true
 
 . ~/.api-env
+
+export PATH="$PATH:$HOME/.puro/bin" # Added by Puro
+export PATH="$PATH:$HOME/.puro/shared/pub_cache/bin" # Added by Puro
+export PATH="$PATH:$HOME/.puro/envs/default/flutter/bin" # Added by Puro
+export PURO_ROOT="/home/fadil/.puro" # Added by Puro
