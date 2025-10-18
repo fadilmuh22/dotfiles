@@ -1,4 +1,5 @@
 alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'
+alias cd='z'
 alias ls='exa'
 alias cat='bat'
 alias tree='tre'
@@ -16,11 +17,11 @@ export BOTTLES_GAMES=$BOTTLES_HOME/Games
 export MY_GAMES=$HOME/Games
 
 export ANDROID_SDK_ROOT=$HOME/Android/Sdk
-export ANDROID_HOME=$HOME/Android/Sdk
+export ANDROID_HOME=$ANDROID_SDK_ROOT
 export ANDROID_AVD_HOME=$HOME/.config/.android/avd
 export CHROME_EXECUTABLE=/usr/bin/chromium-browser
 
-. "$HOME/.cargo/env"
+#. "$HOME/.cargo/env"
 
 GOPATH=$HOME/go
 GOSWAGGER_REPO="ghcr.io"

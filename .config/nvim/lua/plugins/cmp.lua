@@ -77,7 +77,7 @@ return {
       },
 
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer', 'luasnip', 'easy-dotnet' },
+        default = { 'lsp', 'path', 'snippets', 'buffer', 'easy-dotnet' },
 
         providers = {
           ['easy-dotnet'] = {
@@ -103,14 +103,14 @@ return {
           --     return items
           --   end,
           -- },
-          luasnip = {
-            name = 'luasnip',
-            enabled = true,
-            module = 'blink.cmp.sources.luasnip',
-            min_keyword_length = 2,
-            fallbacks = { 'snippets' },
-            score_offset = 85, -- the higher the number, the higher the priority
-          },
+          -- luasnip = {
+          --   name = 'luasnip',
+          --   enabled = true,
+          --   module = 'blink.cmp.sources.luasnip',
+          --   min_keyword_length = 2,
+          --   fallbacks = { 'snippets' },
+          --   score_offset = 85, -- the higher the number, the higher the priority
+          -- },
         },
       },
     },
