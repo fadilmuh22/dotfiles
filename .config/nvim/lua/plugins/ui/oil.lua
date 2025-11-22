@@ -10,7 +10,8 @@ return {
     local oil = require 'oil'
 
     oil.setup(opts)
-    vim.api.nvim_set_keymap('n', '<leader>-', '<cmd>lua require(\'oil\').toggle_float()<CR>', { noremap = true, silent = true })
+    vim.api.nvim_set_keymap('n', '<A-->', '<cmd>lua require(\'oil\').toggle_float()<CR>', { noremap = true, silent = true })
+    vim.api.nvim_set_keymap('n', '<leader>-', '<cmd>tab Oil<CR>', { noremap = true, silent = true })
 
     vim.api.nvim_create_user_command('Explore', function()
       oil.open()

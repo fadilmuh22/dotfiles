@@ -1,18 +1,5 @@
 return {
   {
-    'ricardoramirezr/blade-nav.nvim',
-    dependencies = {
-      'saghen/blink.cmp',
-    },
-    ft = { 'blade', 'php' },
-    opts = {
-      close_tag_on_complete = true, -- default: true
-    },
-  },
-  -- {
-  --   'giuxtaposition/blink-cmp-copilot',
-  -- },
-  {
     'saghen/blink.cmp',
     -- optional: provides snippets for the snippet source
     dependencies = {
@@ -107,18 +94,9 @@ return {
           --     return items
           --   end,
           -- },
-          -- luasnip = {
-          --   name = 'luasnip',
-          --   enabled = true,
-          --   module = 'blink.cmp.sources.luasnip',
-          --   min_keyword_length = 2,
-          --   fallbacks = { 'snippets' },
-          --   score_offset = 85, -- the higher the number, the higher the priority
-          -- },
         },
       },
     },
     opts_extend = { 'sources.default' },
   },
 }
--- vim: ts=2 sts=2 sw=2 et

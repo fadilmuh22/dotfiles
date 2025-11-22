@@ -13,7 +13,7 @@ return {
   ---@module "auto-session"
   ---@type AutoSession.Config
   opts = {
-    suppressed_dirs = { '~/', '~/Downloads', '/' },
+    suppressed_dirs = { '~/', '~/Downloads', '/', '~/.local/share/db_ui' },
     bypass_save_filetypes = {'.fugitiveblame'}
   },
 }
