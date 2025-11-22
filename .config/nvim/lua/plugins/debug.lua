@@ -31,6 +31,9 @@ return {
 
       -- Add your own debuggers here
       'leoluz/nvim-dap-go',
+
+      -- DLL auto chooser
+      'ramboe/ramboe-dotnet-utils',
     },
     keys = {
       -- Basic debugging keymaps, feel free to change to your liking!
@@ -63,7 +66,7 @@ return {
         desc = 'Debug: Step Out',
       },
       {
-        '<leader>b',
+        '<leader>bp',
         function()
           require('dap').toggle_breakpoint()
         end,
@@ -80,6 +83,7 @@ return {
       {
         '<F7>',
         function()
+          -- require('dapui').toggle()
           require('dap-view').toggle()
         end,
         desc = 'Debug: See last session result.',
@@ -106,28 +110,6 @@ return {
         },
       }
 
-      -- Dap UI setup
-      -- For more information, see |:help nvim-dap-ui|
-      -- dapui.setup {
-      --   -- Set icons to characters that are more likely to work in every terminal.
-      --   --    Feel free to remove or use ones that you like more! :)
-      --   --    Don't feel like these are good choices.
-      --   icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
-      --   controls = {
-      --     icons = {
-      --       pause = '⏸',
-      --       play = '▶',
-      --       step_into = '⏎',
-      --       step_over = '⏭',
-      --       step_out = '⏮',
-      --       step_back = 'b',
-      --       run_last = '▶▶',
-      --       terminate = '⏹',
-      --       disconnect = '⏏',
-      --     },
-      --   },
-      -- }
-
       -- Change breakpoint icons
       -- vim.api.nvim_set_hl(0, 'DapBreak', { fg = '#e51400' })
       -- vim.api.nvim_set_hl(0, 'DapStop', { fg = '#ffcc00' })
@@ -139,7 +121,7 @@ return {
       --   local hl = (type == 'Stopped') and 'DapStop' or 'DapBreak'
       --   vim.fn.sign_define(tp, { text = icon, texthl = hl, numhl = hl })
       -- end
-
+      --
       -- dap.listeners.after.event_initialized['dapui_config'] = dapui.open
       -- dap.listeners.before.event_terminated['dapui_config'] = dapui.close
       -- dap.listeners.before.event_exited['dapui_config'] = dapui.close
@@ -152,6 +134,8 @@ return {
           detached = vim.fn.has 'win32' == 0,
         },
       }
+
+      require('easy-dotnet.netcoredbg').register_dap_variables_viewer()
 
       local mason_path = vim.fn.stdpath 'data' .. '/mason/packages/netcoredbg/netcoredbg'
 
@@ -170,30 +154,56 @@ return {
           name = 'launch - netcoredbg',
           request = 'launch',
           program = function()
-            -- return vim.fn.input("Path to dll: ", vim.fn.getcwd() .. "/src/", "file")
-            return vim.fn.input('Path to dll: ', vim.fn.getcwd() .. '/bin/Debug/net8.0/', 'file')
+            return require('dap-dll-autopicker').build_dll_path()
           end,
-
           -- justMyCode = false,
           -- stopAtEntry = false,
           -- -- program = function()
           -- --   -- todo: request input from ui
           -- --   return "/path/to/your.dll"
           -- -- end,
-          -- env = {
-          --   ASPNETCORE_ENVIRONMENT = function()
-          --     -- todo: request input from ui
-          --     return "Development"
-          --   end,
-          --   ASPNETCORE_URLS = function()
-          --     -- todo: request input from ui
-          --     return "http://localhost:5050"
-          --   end,
-          -- },
-          -- cwd = function()
-          --   -- todo: request input from ui
-          --   return vim.fn.getcwd()
-          -- end,
+          env = {
+            ASPNETCORE_ENVIRONMENT = function()
+              -- todo: request input from ui
+              return 'Development'
+            end,
+            -- ASPNETCORE_URLS = function()
+            --   -- todo: request input from ui
+            --   return 'http://localhost:5282'
+            -- end,
+          },
+          cwd = function()
+            -- todo: request input from ui
+            local current_file = vim.api.nvim_buf_get_name(0)
+            local current_dir = vim.fn.fnamemodify(current_file, ':p:h')
+            return vim.fn.input('Project Directory: ', require('dap-dll-autopicker').find_project_root_by_csproj(current_dir))
+          end,
+        },
+        {
+          type = 'coreclr',
+          name = 'Attach to .NET Process',
+          request = 'attach',
+          -- This will prompt you to select a running process from a list
+          processId = require('dap.utils').pick_process,
+        },
+      }
+
+      dap.adapters.dart = {
+        type = 'executable',
+        -- As of this writing, this functionality is open for review in https://github.com/flutter/flutter/pull/91802
+        command = 'flutter',
+        args = { 'debug_adapter' },
+      }
+      dap.configurations.dart = {
+        {
+          type = 'dart',
+          request = 'launch',
+          name = 'Launch Flutter Program',
+          console = 'terminal',
+          -- The nvim-dap plugin populates this variable with the filename of the current buffer
+          program = '${file}',
+          -- The nvim-dap plugin populates this variable with the editor's current working directory
+          cwd = '${workspaceFolder}',
         },
       }
     end,

@@ -78,6 +78,9 @@ return {
 
       sources = {
         default = { 'lsp', 'path', 'snippets', 'buffer', 'easy-dotnet' },
+        per_filetype = {
+          sql = { 'snippets', 'dadbod', 'buffer' },
+        },
 
         providers = {
           ['easy-dotnet'] = {
@@ -87,6 +90,7 @@ return {
             score_offset = 10000,
             async = true,
           },
+          dadbod = { name = 'Dadbod', module = 'vim_dadbod_completion.blink' },
           -- copilot = {
           --   name = 'copilot',
           --   enabled = true,

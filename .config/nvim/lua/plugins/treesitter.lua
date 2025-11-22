@@ -1,5 +1,11 @@
 return {
   {
+    'mbbill/undotree',
+    config = function()
+      vim.keymap.set('n', '<leader>tu', '<CMD>UndotreeToggle<CR>', { noremap = true, silent = true, desc = '[T]oggle [u]ndotree' })
+    end,
+  },
+  {
     'numToStr/Comment.nvim',
     opts = {},
     config = function()
@@ -74,6 +80,7 @@ return {
         'vimdoc',
         'go',
         'rust',
+        'razor',
         'zig',
         'typescript',
         'javascript',

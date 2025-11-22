@@ -79,9 +79,7 @@ source <(fzf --zsh)
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
-export NVM_DIR="$HOME/.config/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+source /usr/share/nvm/init-nvm.sh
 
 eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/zen.toml)"
 
@@ -128,3 +126,9 @@ precmd() {
 PS1='\[\033[01;32m\]\u@\h \[\033[01;34m\]\w\$ '
 
 export PATH=$PATH:/home/fadil/.spicetify
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/fadil/google-cloud-sdk/path.zsh.inc' ]; then . '/home/fadil/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/fadil/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/fadil/google-cloud-sdk/completion.zsh.inc'; fi

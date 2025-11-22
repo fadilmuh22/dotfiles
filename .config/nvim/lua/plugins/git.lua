@@ -1,13 +1,31 @@
 return {
   { 'ThePrimeagen/git-worktree.nvim' },
   { 'sindrets/diffview.nvim' },
+  { 'tpope/vim-abolish' },
   {
     'tpope/vim-fugitive',
     config = function()
+      local function get_merge_base()
+        local cmd = 'git merge-base origin HEAD'
+        return vim.trim(vim.fn.system(cmd))
+      end
+
       vim.keymap.set('n', '<leader>gg', '<cmd>Git<cr>', { desc = 'Fugitive' })
       vim.keymap.set('n', '<leader>gt', ':tab Git<CR>', { desc = 'Fugitive tab' })
       vim.keymap.set('n', '<leader>gv', ':vertical Git<CR>', { desc = 'Fugitive vertical' })
       vim.keymap.set('n', '<leader>gc', ':vertical Git log --patch %<CR>', { desc = 'Fugitive log current' })
+
+      vim.keymap.set('n', '<leader>gr', function()
+        vim.cmd('Git difftool -y ' .. get_merge_base())
+      end, { desc = 'Fugitive difftool -y vs Base' })
+
+      vim.keymap.set('n', '<leader>gf', function()
+        vim.cmd('Git difftool --name-only ' .. get_merge_base())
+      end, { desc = 'Fugitive changed files vs Base' })
+
+      vim.keymap.set('n', '<leader>gD', function()
+        vim.cmd('Gvdiffsplit! ' .. get_merge_base())
+      end, { desc = 'Fugitive vertical Diff Split vs Base' })
     end,
   },
   { -- Adds git related signs to the gutter, as well as utilities for managing changes
@@ -71,5 +89,35 @@ return {
         map('n', '<leader>tD', gitsigns.toggle_deleted, { desc = '[T]oggle git show [D]eleted' })
       end,
     },
+  },
+  {
+    'harrisoncramer/gitlab.nvim',
+    dependencies = {
+      'MunifTanjim/nui.nvim',
+      'nvim-lua/plenary.nvim',
+      'sindrets/diffview.nvim',
+      'stevearc/dressing.nvim', -- Recommended but not required. Better UI for pickers.
+      'nvim-tree/nvim-web-devicons', -- Recommended but not required. Icons in discussion tree.
+    },
+    build = function()
+      require('gitlab.server').build(true)
+    end, -- Builds the Go binary
+    config = function()
+      require('gitlab').setup()
+    end,
+  },
+  {
+    'ldelossa/gh.nvim',
+    dependencies = {
+      {
+        'ldelossa/litee.nvim',
+        config = function()
+          require('litee.lib').setup()
+        end,
+      },
+    },
+    config = function()
+      require('litee.gh').setup()
+    end,
   },
 }

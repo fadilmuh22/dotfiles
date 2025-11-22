@@ -7,8 +7,10 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Buffers keymaps
 vim.keymap.set('n', '<leader>d', '"_d', { noremap = true, desc = '[D]elete not cut' })
-vim.keymap.set('n', '<leader>bd', ':bd<CR>')
-vim.keymap.set('n', '<leader>bo', '<cmd>%bd|e#<cr>', { desc = 'Close all buffers but the current one' }) -- https://stackoverflow.com/a/42071865/516188
+vim.keymap.set('n', '<leader>bd', ':bd<CR>', { desc = 'Close current buffer' })
+vim.keymap.set('n', '<leader>ba', '<cmd>%bd|e#<cr>', { desc = 'Close all buffers but the current one' }) -- https://stackoverflow.com/a/42071865/516188
+vim.keymap.set('n', '<leader>bb', ':tabclose<CR>', { desc = 'Close current tab' })
+
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -47,7 +49,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
-vim.keymap.set("v", "<leader>y", '"+y', { noremap = true })
+vim.keymap.set('v', '<leader>y', '"+y', { noremap = true })
 
 vim.keymap.set('n', '+', [[<cmd>vertical resize +5<cr>]]) -- make the window biger vertically
 vim.keymap.set('n', '_', [[<cmd>vertical resize -5<cr>]]) -- make the window smaller vertically
@@ -64,5 +66,11 @@ vim.keymap.set('n', '<leader>cp', function()
   vim.fn.setreg('+', final)
   print('Copied: ' .. final)
 end, { desc = 'Copy file path from project root with line & col' })
+
+vim.keymap.set('t', '<a-r>', function()
+  local next_char_code = vim.fn.getchar()
+  local next_char = vim.fn.nr2char(tonumber(next_char_code) or 0)
+  return '<C-\\><C-N>"' .. next_char .. 'pi'
+end, { expr = true })
 
 -- vim: ts=2 sts=2 sw=2 et

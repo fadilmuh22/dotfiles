@@ -5,8 +5,11 @@ alias cat='bat'
 alias tree='tre'
 alias fd=fdfind
 
+#alias fortimit=trusted_cert=$(echo | openssl s_client -connect forti.gslb.taspen.co.id:10443 2>/dev/null | openssl x509 -outform der | sha256sum | awk '{ print $1 }') && nohup sudo openfortivpn forti.gslb.taspen.co.id:10443 --username mit.andal --password "MIT_aNDaL24;#" --trusted-cert $trusted_cert > /dev/null  2>&1 &
+
 export EDITOR=vim
 export FCEDIT=vim
+export TERM=xterm-256color
 
 export XDG_CONFIG_HOME=$HOME/.config
 export NVIM_CONFIG=$XDG_CONFIG_HOME/nvim
@@ -19,7 +22,7 @@ export MY_GAMES=$HOME/Games
 export ANDROID_SDK_ROOT=$HOME/Android/Sdk
 export ANDROID_HOME=$ANDROID_SDK_ROOT
 export ANDROID_AVD_HOME=$HOME/.config/.android/avd
-export CHROME_EXECUTABLE=/usr/bin/chromium-browser
+export CHROME_EXECUTABLE=/usr/bin/chromium
 
 #. "$HOME/.cargo/env"
 
@@ -44,6 +47,8 @@ export PATH="$FLYCTL_INSTALL/bin:$PATH"
 
 export DOTNET_SYSTEM_CONSOLE_ALLOW_ANSI_COLOR_REDIRECTION=true
 export DOTNET_WATCH_SUPPRESS_LAUNCH_BROWSER=true
+export DOTNET_WATCH_SUPPRESS_BROWSER_REFRESH=true
+export PATH=$PATH:$HOME/.dotnet/tools
 
 . ~/.api-env
 
@@ -51,3 +56,5 @@ export PATH="$PATH:$HOME/.puro/bin" # Added by Puro
 export PATH="$PATH:$HOME/.puro/shared/pub_cache/bin" # Added by Puro
 export PATH="$PATH:$HOME/.puro/envs/default/flutter/bin" # Added by Puro
 export PURO_ROOT="/home/fadil/.puro" # Added by Puro
+
+
