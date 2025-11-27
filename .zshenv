@@ -5,8 +5,6 @@ alias cat='bat'
 alias tree='tre'
 alias fd=fdfind
 
-#alias fortimit=trusted_cert=$(echo | openssl s_client -connect forti.gslb.taspen.co.id:10443 2>/dev/null | openssl x509 -outform der | sha256sum | awk '{ print $1 }') && nohup sudo openfortivpn forti.gslb.taspen.co.id:10443 --username mit.andal --password "MIT_aNDaL24;#" --trusted-cert $trusted_cert > /dev/null  2>&1 &
-
 export EDITOR=vim
 export FCEDIT=vim
 export TERM=xterm-256color
